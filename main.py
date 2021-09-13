@@ -2,7 +2,10 @@ import sys
 
 from Scraper import Scraper
 
-
+"""
+Read keywords form file. It have to be one keyword for a line. Returns list of keywords.
+filename - filename of input file
+"""
 def load_keywords_txt(filename):
     import csv
     keywords = []
@@ -13,7 +16,12 @@ def load_keywords_txt(filename):
     print("Loaded {} keywords".format(len(keywords)))
     return keywords
 
-
+"""
+Save results to csv file. 
+file - path and filename to save
+output - list to save
+obj_name - saved objects described using string
+"""
 def save(file, output, obj_name):
     with open(file, "w", encoding="utf8", newline="") as savef:
         import csv
@@ -22,16 +30,19 @@ def save(file, output, obj_name):
     print("Saved {} {}".format(len(output), obj_name))
 
 
+"""
+Entry point of program.
+"""
 if __name__ == '__main__':
     print(sys.argv)
     if len(sys.argv) == 2:
-        website = int(sys.argv[1])
+        website = str(sys.argv[1])
         keywords_file = "keywords.txt"
     elif len(sys.argv) == 3:
-        website = int(sys.argv[1])
-        keywords_file = int(sys.argv[2])
+        website = str(sys.argv[1])
+        keywords_file = str(sys.argv[2])
     else:
-        website = "https://megatool.pl"
+        website = "https://www.searchenginejournal.com"
         keywords_file = "keywords.txt"
         print("Wrong parameters, used default: {} {}".format(website, keywords_file))
 
@@ -47,7 +58,6 @@ if __name__ == '__main__':
         totals = scraper.get_total_for_keywords()
         save("urls.csv", urls, "urls")
         save("totals.csv", totals, "totals")
-
     else:
         print("No keywords in file")
 
